@@ -56,15 +56,9 @@ exports.register = (req, res) => {
   const { name, email, password, passwordConfirm } = req.body;
 
   // 2) Check if user exists && password is correct
-  db.start.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
+  connection.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
     if(error) {
       console.log(error)
-    }
-
-    if(results.length > 0 ) {
-      return res.render('register', {
-                message: 'That Email has been taken'
-              });
     } else if(password !== passwordConfirm) {
       return res.render('register', {
         message: 'Passwords do not match'
@@ -74,29 +68,14 @@ exports.register = (req, res) => {
     let hashedPassword = await bcrypt.hash(password, 8);
     console.log(hashedPassword);
 
-    db.start.query('INSERT INTO users SET ?', { name: name, email: email, password: hashedPassword }, (error, result) => {
+    connection.query('INSERT INTO users SET ?', { name: name, email: email, password: hashedPassword }, (error, result) => {
       if(error) {
         console.log(error)
-      } else {
-        db.start.query('SELECT id FROM users WHERE email = ?', [email], (error, result) => {
-          const id = result[0].id;
-          console.log(id);
-          const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-          });
-
-          const cookieOptions = {
-            expires: new Date(
-              Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-            ),
-            httpOnly: true
-          };
-          res.cookie('jwt', token, cookieOptions);
-
-          res.status(201).redirect("/");
-        });
-      }
+      } 
     });
+
+    res.status(200).redirect("/steven");
+
   });
 };
 
