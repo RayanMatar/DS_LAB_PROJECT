@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    nav{
+    background-color: #006400;
+    color: #fff;
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav li{
+    list-style: none ;
+}
+
+nav li a {
+    color:#fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 8px;
+}
+
+nav li a:hover {
+    color:whitesmoke;
+    text-decoration:underline;
+    
+}
+.card-header, .card{
+    border-color: #006400;
+}
+.btn {
+    background-color: #006400;
+}
+
+  </style>
+  <nav>
+    <h2>Node MySQL</h2>
+    <ul>
+      <li><a href="/">Home</a></li>
+      {{#if user}}
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
+      {{else}}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      {{/if}}
+    </ul>
+  </nav>
+  <div class="container">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur repellat maiores repudiandae culpa nisi, voluptas eaque, officiis, tenetur fuga aperiam praesentium? Ducimus, at iusto! Voluptas nihil velit accusantium exercitationem eveniet!</p>
+  </div>
+</body>
+</html>
